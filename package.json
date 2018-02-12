@@ -1,0 +1,15 @@
+{
+  "name": "ssh-config-to-cyberduck",
+  "version": "1.0.0",
+  "description": "Parses ssh config and generates cyberduck bookmarks",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Hasnat Ullah <hasnat.ullah@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "plist": "^2.1.0",
+    "ssh-config": "^1.1.3"
+  }
+}
