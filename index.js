@@ -1,8 +1,10 @@
 const SSHConfig = require('ssh-config');
 const fs = require('fs');
 const plist = require('plist');
+const os = require('os');
+// const uuidv5 = require('uuid/v5');
 
-let sshConfigPath = require('os').homedir() + '/.ssh/config';
+let sshConfigPath = os.homedir() + '/.ssh/config';
 
 if (process.argv.length > 2) {
     sshConfigPath = process.argv[2];
@@ -20,24 +22,26 @@ fs.readFile(sshConfigPath, 'utf-8', (err, data) => {
     for (let i = 0; i < configs.length; i++) {
         const config = configs.compute(configs[i].value);
         const {Host, HostName, Port, User, IdentityFile} = config;
+        // const UUID = uuidv5(Host, uuidv5.DNS);
         fs.writeFile(
             `./ducks/${Host}.duck`,
             plist.build({
                 Protocol: 'sftp',
                 Provider: 'iterate GmbH',
                 Nickname: Host,
-                Hostname: HostName,
-                Port,
-                Username: User,
+                // UUID,
+                Hostname: HostName ? HostName : Host,
+                Port: Port ? Port : '22',
+                Username: User ? User : os.userInfo().username,
                 ...(IdentityFile && IdentityFile.length ? {
                     'Private Key File': IdentityFile[0],
                     'Private Key File Dictionary': {
                         Path: IdentityFile[0]
                     }
                 } : {}),
-                Comment: JSON.stringify(config)
+                // Comment: JSON.stringify(config)
             }),
-            console.log
+            e => e && console.log(e)
         );
     }
 });
