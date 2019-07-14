@@ -9,7 +9,7 @@
   "author": "Hasnat Ullah <hasnat.ullah@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "plist": "^2.1.0",
+    "plist": "^3.0.1",
     "ssh-config": "^1.1.3",
     "uuid": "^3.2.1"
   }
